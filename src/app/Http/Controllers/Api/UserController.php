@@ -3,12 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 use App\Services\UserService;
 
 class UserController extends Controller
 {
+    // Instância do service de usuário
     private UserService $userService;
 
     public function __construct(UserService $userService)
@@ -25,34 +27,51 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Responsável por criar um novo usuário.
      */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+        $this->userService->createUser($request->validated());
+
+        return response()->noContent(201);
     }
 
     /**
-     * Display the specified resource.
+     * Responsável por retornar um usuário.
      */
-    public function show(string $id)
+    public function show(int $id)
     {
-        //
+        $user = $this->userService->getUserById($id);
+
+        if(!$user)
+            return response()->json(['message' => 'usuário não encontrado.'], 404);
+
+        return response()->json($user);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Responsável por atualizar um usuário.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateUserRequest $request, string $id)
     {
-        //
+        $user = $this->userService->updateUser($id, $request->validated());
+
+        if (!$user)
+            return response()->json(['message' => 'Usuário não encontrado.'], 404);
+
+        return response()->json($user);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Responsável por excluir um usuário.
      */
     public function destroy(string $id)
     {
-        //
+        $user = $this->userService->deleteUserById($id);
+
+        if (!$user)
+            return response()->json(['message' => 'Usuário não encontrado']);
+
+        return response()->json(['message' => 'Usuário excluído com sucesso.']);
     }
 }
