@@ -1,5 +1,6 @@
 <?php
 
+use App\HTTP\Controllers\Api\Auth\LoginUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
 
@@ -7,8 +8,14 @@ Route::get('/', function () {
     return json_encode(['status' => true]);
 });
 
-Route::get('/users', [UserController::class, 'index']);
-Route::get('/user/{id}', [UserController::class, 'show']);
-Route::post('/users', [UserController::class, 'store']);
-Route::put('/user/{id}', [UserController::class, 'update']);
-Route::delete('/user/{id}', [UserController::class, 'destroy']);
+Route::prefix('users')->group(function () {
+    Route::get('/', [UserController::class, 'index']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::post('/', [UserController::class, 'store']);
+    Route::put('/{id}', [UserController::class, 'update']);
+    Route::delete('/{id}', [UserController::class, 'destroy']);
+});
+
+Route::prefix('auth')->group(function () {
+    Route::post('/users/login', [LoginUserController::class, 'login']);
+});
