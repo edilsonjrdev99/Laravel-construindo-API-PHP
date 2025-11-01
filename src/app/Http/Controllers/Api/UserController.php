@@ -31,7 +31,9 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        $this->userService->createUser($request->validated());
+        $user = $this->userService->createUser($request->validated());
+
+        if (!$user) return response()->json(['message' => 'Cpf deve conter 11 dígitos numéricos, CNPJ deve conter 14 dígitos numéricos.']);
 
         return response()->noContent(201);
     }

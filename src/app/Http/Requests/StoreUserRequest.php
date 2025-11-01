@@ -24,9 +24,26 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'person_type' => 'required|in:fisica,juridica',
+            'name' => 'required_if:person_type,fisica|string|max:50|nullable',
+            'surname' => 'required_if:person_type,fisica|string|max:255|nullable',
+            'cpf' => 'required_if:person_type,fisica|string|max:11|nullable',
+            'corporate_name' => 'required_if:person_type,juridica|string|max:50|nullable',
+            'cnpj' => 'required_if:person_type,juridica|string|max:14|nullable',
+            'phone' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed'
+            'password' => 'required|string|min:6|confirmed',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     */
+    public function messages(): array
+    {
+        return [
+            'person_type.in' => 'O tipo de pessoa deve ser fisica ou juridica.',
+            'email.unique' => 'Este email já existe.',
         ];
     }
 
