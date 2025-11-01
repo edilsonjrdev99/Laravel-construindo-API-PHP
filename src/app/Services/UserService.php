@@ -32,14 +32,8 @@ class UserService {
      */
     public function createUser(array $data): User|bool
     {
-        $document = $data['person_type'] == 'fisica' ? $data['cpf'] : $data['cnpj'];
-
-        $isValidDocument = $this->validateCpfOrCnpj($document);
-
-        if (!$isValidDocument) return false;
-
         return User::create([
-            'name' => $data['name'] ?? null,
+            'name' => $data['name'] ?? '',
             'surname' => $data['surname'] ?? null,
             'person_type' => $data['person_type'],
             'corporate_name' => $data['corporate_name'] ?? null,
@@ -87,29 +81,5 @@ class UserService {
             return false;
 
         return $user->delete();
-    }
-
-    /**
-     * Responsável por validar se o cpf ou cnpj é válido
-     * @param string $document = string do cpf ou cnpj
-     * @return bool
-     */
-    private function validateCpfOrCnpj(string $document): bool
-    {
-        // Remove a máscara .
-        $document = preg_replace('/\D/', '', $document);
-
-        $document = trim($document);
-
-        if (!ctype_digit($document))
-            return false;
-
-        if(strlen($document) === 11)
-            return true;
-
-        if(strlen($document) === 14)
-            return true;
-
-        return false;
     }
 }
