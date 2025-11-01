@@ -12,11 +12,11 @@ Route::get('/', function () {
 });
 
 Route::prefix('users')->group(function () {
-    Route::get('/', [UserController::class, 'index']);
-    Route::get('/{id}', [UserController::class, 'show']);
+    Route::get('/', [UserController::class, 'index'])->middleware('auth:api');;
+    Route::get('/{id}', [UserController::class, 'show'])->middleware('auth:api');;
     Route::post('/', [UserController::class, 'store']);
-    Route::put('/{id}', [UserController::class, 'update']);
-    Route::delete('/{id}', [UserController::class, 'destroy']);
+    Route::put('/{id}', [UserController::class, 'update'])->middleware('auth:api');;
+    Route::delete('/{id}', [UserController::class, 'destroy'])->middleware('auth:api');;
 });
 
 Route::prefix('auth')->group(function () {
