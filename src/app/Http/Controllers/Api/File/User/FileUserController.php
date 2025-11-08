@@ -3,14 +3,14 @@
 namespace App\Http\Controllers\Api\File\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\File\User\saveUserImageRequest;
 use App\Services\File\User\FileUserService;
-use Illuminate\Http\Request;
 
 class FileUserController extends Controller
 {
     public function __construct(private FileUserService $fileUserService) {}
 
-    public function saveUserImage(Request $request, int $id)
+    public function saveUserImage(saveUserImageRequest $request, int $id)
     {
         $saveImage = $this->fileUserService->uploadUserImage($request->file('file'), $id);
 
