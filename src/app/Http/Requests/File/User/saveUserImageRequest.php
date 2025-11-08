@@ -34,10 +34,10 @@ class saveUserImageRequest extends FormRequest
     public function messages()
     {
         return [
-            'cover.required' => 'A imagem é obrigatória.',
-            'cover.image' => 'O arquivo deve ser uma imagem válida.',
-            'cover.mimes' => 'A imagem deve estar no formato PNG ou JPG.',
-            'cover.max' => 'A imagem não pode ter mais de 2MB.',
+            'file.required' => 'A imagem é obrigatória.',
+            'file.image' => 'O arquivo deve ser uma imagem válida.',
+            'file.mimes' => 'A imagem deve estar no formato PNG ou JPG.',
+            'file.max' => 'A imagem não pode ter mais de 2MB.',
         ];
     }
 }
