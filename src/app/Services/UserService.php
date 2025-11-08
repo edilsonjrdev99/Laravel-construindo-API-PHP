@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Mail\UserCreatedMail;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserService {
     /**
@@ -32,7 +34,7 @@ class UserService {
      */
     public function createUser(array $data): User|bool
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'] ?? '',
             'surname' => $data['surname'] ?? null,
             'person_type' => $data['person_type'],
@@ -43,6 +45,12 @@ class UserService {
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
+
+        $userName = $data['person_type'] == 'fisica' ? $data['name'] : $data['corporate_name'];
+
+        Mail::to($user->email)->send(new UserCreatedMail($userName));
+
+        return $user;
     }
 
     /**

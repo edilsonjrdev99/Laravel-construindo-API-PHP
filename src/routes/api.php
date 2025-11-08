@@ -6,9 +6,14 @@ use App\Http\Controllers\Api\Auth\MeUserController;
 use App\Http\Controllers\Api\Auth\ChangePasswordUserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Mail\UserCreatedMail;
 
 Route::get('/', function () {
     return json_encode(['status' => true]);
+});
+
+Route::get('/email', function () {
+    return new UserCreatedMail('Novo usuário');
 });
 
 Route::prefix('users')->group(function () {
