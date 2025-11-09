@@ -15,7 +15,7 @@ class FileUserService {
 
         if (!$user) return null;
 
-        $uploadPath = $this->uploadImage($file, 'user-images');
+        $uploadPath = $this->uploadImage($file, "user-images/$id");
 
         $user->avatar = $uploadPath;
 

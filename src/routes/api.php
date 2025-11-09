@@ -19,11 +19,11 @@ Route::get('/email', function () {
 
 // Usuários
 Route::prefix('users')->group(function () {
-    Route::get('/', [UserController::class, 'index'])->middleware('auth:api');;
-    Route::get('/{id}', [UserController::class, 'show'])->middleware('auth:api');;
+    Route::get('/', [UserController::class, 'index'])->middleware('auth:api');
+    Route::get('/{id}', [UserController::class, 'show'])->middleware('auth:api');
     Route::post('/', [UserController::class, 'store']);
-    Route::put('/{id}', [UserController::class, 'update'])->middleware('auth:api');;
-    Route::delete('/{id}', [UserController::class, 'destroy'])->middleware('auth:api');;
+    Route::put('/{id}', [UserController::class, 'update'])->middleware('auth:api');
+    Route::delete('/{id}', [UserController::class, 'destroy'])->middleware('auth:api');
 });
 
 // Autenticação
