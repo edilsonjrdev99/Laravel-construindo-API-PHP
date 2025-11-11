@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Mail\UserCreatedMail;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 
@@ -12,9 +14,17 @@ class UserService {
     /**
      * Responsável por buscar todos os usuários.
      */
-    public function getAllUsers(): Collection 
+    public function getAllUsers(Request $request): LengthAwarePaginator 
     {
-        return User::all();
+        $itemsPerPage = $request->has('itemsPerPage') ? $request->itemsPerPage : 10;
+
+        if($request->has('name'))
+            return User::whereName($request->name)->paginate($itemsPerPage);
+
+        if($request->has('corporateName'))
+            return User::whereCorporateName($request->corporateName)->paginate($itemsPerPage);
+
+        return User::paginate($itemsPerPage);
     }
 
     /**

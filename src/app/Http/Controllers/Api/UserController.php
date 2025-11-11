@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-
 use App\Services\UserService;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -21,9 +21,9 @@ class UserController extends Controller
     /**
      * Responsável por retornar todos os usuários.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json($this->userService->getAllUsers());
+        return response()->json($this->userService->getAllUsers($request));
     }
 
     /**
