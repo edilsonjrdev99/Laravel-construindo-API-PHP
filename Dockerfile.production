@@ -1,0 +1,55 @@
+# Multi-stage build para otimizar tamanho da imagem
+FROM php:8.2-fpm AS base
+
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    git \
+    unzip \
+    libzip-dev \
+    zip \
+    nginx \
+    supervisor \
+    netcat-openbsd \
+    && docker-php-ext-install pdo pdo_mysql zip \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instalar Composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
+WORKDIR /var/www/html
+
+# Copiar composer files primeiro para aproveitar cache do Docker
+COPY src/composer.json src/composer.lock ./
+
+# Instalar dependências do PHP (sem dev dependencies)
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --prefer-dist \
+    --optimize-autoloader \
+    --no-scripts
+
+# Copiar todo o código da aplicação
+COPY src/ .
+
+# Finalizar instalação do composer
+RUN composer dump-autoload --optimize
+
+# Configurar permissões
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 755 /var/www/html/storage \
+    && chmod -R 755 /var/www/html/bootstrap/cache
+
+# Copiar configuração do nginx
+COPY nginx.conf /etc/nginx/sites-available/default
+
+# Copiar script de inicialização
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+# Expor porta 8000 (Render espera essa porta por padrão)
+EXPOSE 8000
+
+# Comando para iniciar a aplicação
+CMD ["/usr/local/bin/start.sh"]
