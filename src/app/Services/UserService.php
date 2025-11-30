@@ -4,7 +4,6 @@ namespace App\Services;
 
 use App\Mail\UserCreatedMail;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;

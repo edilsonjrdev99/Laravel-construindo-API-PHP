@@ -1,12 +1,15 @@
 <?php
 
+// CONTROLLERS
+use App\Http\Controllers\Api\UserController;
 use App\HTTP\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\Auth\LogoutUserController;
 use App\Http\Controllers\Api\Auth\MeUserController;
 use App\Http\Controllers\Api\Auth\ChangePasswordUserController;
 use App\Http\Controllers\Api\File\User\FileUserController;
+use App\Http\Controllers\Api\Public\Settings\PublicSettingsColorController;
+use App\Http\Controllers\Api\Public\Settings\PublicSettingsMenuController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserController;
 use App\Mail\UserCreatedMail;
 
 Route::get('/', function () {
@@ -41,4 +44,12 @@ Route::prefix('file')->middleware('auth:api')->group(function () {
   Route::prefix('upload')->group(function () {
     Route::post('/user/{id}', [FileUserController::class, 'saveUserImage']);
   });
+});
+
+// Rotas públicas do site
+Route::prefix('public')->group(function () {
+    Route::prefix('settings')->group(function () {
+        Route::get('/color', [PublicSettingsColorController::class, 'index']);
+        Route::get('/menu', [PublicSettingsMenuController::class, 'index']);
+    });
 });
