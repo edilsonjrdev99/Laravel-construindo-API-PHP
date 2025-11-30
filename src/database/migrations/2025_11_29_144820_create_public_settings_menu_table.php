@@ -12,6 +12,12 @@ return new class extends Migration
     public function up(): void {
         Schema::create('public_settings_menu', function (Blueprint $table) {
             $table->id();
+
+            $table->foreignId('parent_id')
+                  ->nullable()
+                  ->costrained('public_settings_menus')
+                  ->nullOnDelete();
+
             $table->string('name')->unique();
             $table->string('title')->nullable();
             $table->string('path')->nullable();

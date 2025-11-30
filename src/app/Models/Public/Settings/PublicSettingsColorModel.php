@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Public\Settings;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PublicSettingsColor extends Model
+class PublicSettingsColorModel extends Model
 {
     use HasFactory;
 

@@ -12,10 +12,26 @@ class PublicSettingsMenuSeeder extends Seeder {
     public function run(): void {
         DB::table('public_settings_menu')->insert([
             [
-                'name'       => 'inicio',
-                'title'      => 'Início',
+                'name'       => 'produtos',
+                'title'      => 'Products',
                 'path'       => '/',
-                'link'       => '/',
+                'link'       => '/produtos',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ],
+            [
+                'name'       => 'categorias',
+                'title'      => 'Categorias',
+                'path'       => '/',
+                'link'       => '/categorias',
+                'created_at' => date('Y-m-d H:i:s'),
+                'updated_at' => date('Y-m-d H:i:s')
+            ],
+            [
+                'name'       => 'promocoes',
+                'title'      => 'Promoções',
+                'path'       => '/',
+                'link'       => '/promocoes',
                 'created_at' => date('Y-m-d H:i:s'),
                 'updated_at' => date('Y-m-d H:i:s')
             ]

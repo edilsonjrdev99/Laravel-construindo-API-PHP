@@ -8,7 +8,9 @@ use App\Models\Public\Settings\PublicSettingsMenuModel;
 class PublicSettingsMenuController extends Controller
 {
     public function index() {
-        $menus = PublicSettingsMenuModel::all();
+        $menus = PublicSettingsMenuModel::whereNull('parent_id')
+            ->with('submenus')
+            ->get();
 
         return response()->json($menus);
     }

@@ -23,4 +23,12 @@ class PublicSettingsMenuModel extends Model {
         'link'  => 'string',
         'path'  => 'string'
     ];
+
+    public function parent() {
+        return $this->belongsTo(PublicSettingsMenuModel::class, 'parent_id');
+    }
+
+    public function submenus() {
+        return $this->hasMany(PublicSettingsMenuModel::class, 'parent_id');
+    }
 }

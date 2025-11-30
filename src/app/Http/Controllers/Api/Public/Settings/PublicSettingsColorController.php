@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\Public\Settings;
 
 use App\Http\Controllers\Controller;
-use App\Models\PublicSettingsColor;
+use App\Models\Public\Settings\PublicSettingsColorModel;
 
 class PublicSettingsColorController extends Controller
 {
     public function index() {
-        $data = PublicSettingsColor::all();
+        $data = PublicSettingsColorModel::all();
 
         return response()->json($data);
     }
