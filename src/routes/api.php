@@ -2,7 +2,7 @@
 
 // CONTROLLERS
 use App\Http\Controllers\Api\UserController;
-use App\HTTP\Controllers\Api\Auth\LoginUserController;
+use App\Http\Controllers\Api\Auth\LoginUserController;
 use App\Http\Controllers\Api\Auth\LogoutUserController;
 use App\Http\Controllers\Api\Auth\MeUserController;
 use App\Http\Controllers\Api\Auth\ChangePasswordUserController;
