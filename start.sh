@@ -24,6 +24,10 @@ php artisan config:cache
 php artisan route:cache
 php artisan view:cache
 
+# Rodando as seeders
+echo "Rodando as seeders..."
+php artisan db:seed || echo "Seeder falharam"
+
 # Garantir permissões corretas
 echo "Configurando permissões..."
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
